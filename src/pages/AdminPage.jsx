@@ -3,10 +3,8 @@ import ProductManager from '../components/organisms/admin/ProductManager';
 import OrderRegistry from '../components/organisms/admin/OrderRegistry';
 import { Package, ListOrdered, ArrowLeft } from 'lucide-react';
 
-// Este componente es la página principal del panel de administrador.
-// Utiliza un estado local 'activeTab' para cambiar entre la gestión de productos y el registro de pedidos.
 export default function AdminPage({ products, orders, onAddProduct, onUpdateStock, onDeleteProduct, onBackToSite }) {
-  const [activeTab, setActiveTab] = useState('products'); // 'products' u 'orders'
+  const [activeTab, setActiveTab] = useState('products'); 
 
   return (
     <div className="admin-page">

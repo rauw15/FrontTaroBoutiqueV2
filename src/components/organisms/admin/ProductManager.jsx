@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { PlusCircle, Trash2, Edit } from 'lucide-react';
 
-// Este componente maneja tanto la adición de nuevos productos como la visualización y gestión de los existentes.
 export default function ProductManager({ products, onAddProduct, onUpdateStock, onDeleteProduct }) {
-  // Estado local para el formulario de nuevo producto.
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
@@ -12,13 +10,11 @@ export default function ProductManager({ products, onAddProduct, onUpdateStock, 
     stock: ''
   });
 
-  // Maneja los cambios en los campos del formulario.
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewProduct(prev => ({ ...prev, [name]: value }));
   };
 
-  // Maneja el envío del formulario para agregar un nuevo producto.
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newProduct.name || !newProduct.price || !newProduct.stock) {
@@ -27,16 +23,14 @@ export default function ProductManager({ products, onAddProduct, onUpdateStock, 
     }
     onAddProduct({
       ...newProduct,
-      id: Date.now(), // ID único simple
+      id: Date.now(), 
       price: parseFloat(newProduct.price),
       stock: parseInt(newProduct.stock, 10),
-      rating: (Math.random() * (5 - 4) + 4).toFixed(1) // Rating aleatorio para simulación
+      rating: (Math.random() * (5 - 4) + 4).toFixed(1) 
     });
-    // Resetea el formulario.
     setNewProduct({ name: '', price: '', image: '', category: '', stock: '' });
   };
 
-  // Maneja la actualización del stock de un producto.
   const handleStockChange = (productId, currentStock) => {
     const newStock = prompt("Ingresa el nuevo stock:", currentStock);
     if (newStock !== null && !isNaN(newStock) && newStock.trim() !== '') {
@@ -46,7 +40,6 @@ export default function ProductManager({ products, onAddProduct, onUpdateStock, 
 
   return (
     <div className="product-manager">
-      {/* Formulario para agregar nuevos productos */}
       <div className="admin-card add-product-form">
         <h3><PlusCircle size={20} /> Agregar Nuevo Producto</h3>
         <form onSubmit={handleSubmit}>
@@ -61,7 +54,6 @@ export default function ProductManager({ products, onAddProduct, onUpdateStock, 
         </form>
       </div>
 
-      {/* Lista de productos existentes */}
       <div className="admin-card product-list">
         <h3>Inventario de Productos</h3>
         <table>
