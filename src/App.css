@@ -1285,3 +1285,222 @@ td ul {
   background-color: #fff3cd;
   color: #856404;
 }
+
+/* --- ESTILOS PARA BARRA DE BÚSQUEDA --- */
+.search-section {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 20px;
+}
+
+.search-bar-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-form {
+  width: 100%;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  padding: 8px 15px;
+  transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.search-icon {
+  color: #6c757d;
+  margin-right: 10px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #6c757d;
+}
+
+.filter-button {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.filter-button:hover,
+.filter-button.active {
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.filters-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-top: 8px;
+  z-index: 1001;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 10px;
+}
+
+.filters-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.clear-filters {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.3s ease;
+}
+
+.clear-filters:hover {
+  background: #c82333;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-section h4 {
+  margin: 0 0 12px 0;
+  color: #495057;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-option {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.filter-option:hover {
+  background: #e9ecef;
+  border-color: #4CAF50;
+}
+
+.filter-option.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+.filter-icon {
+  font-size: 16px;
+}
+
+/* Responsive para la barra de búsqueda */
+@media (max-width: 768px) {
+  .header-content {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 20px;
+  }
+  
+  .search-section {
+    order: 3;
+    width: 100%;
+    margin: 10px 0 0 0;
+    max-width: none;
+  }
+  
+  .filters-panel {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 12px 12px 0 0;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+  .filter-options {
+    justify-content: center;
+  }
+  
+  .filter-option {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+}
+
+/* Estilos para mensaje de sin productos */
+.no-products-message {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 40px 0;
+}
+
+.no-products-message h3 {
+  font-size: 24px;
+  color: #6c757d;
+  margin-bottom: 15px;
+}
+
+.no-products-message p {
+  color: #8e9297;
+  font-size: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+}

@@ -10,12 +10,33 @@ export default function FeaturedProducts({ featuredProducts, favorites, toggleFa
     action();
   };
 
+  const capitalizeFirst = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  if (featuredProducts.length === 0) {
+    return (
+      <section id="products" className="products">
+        <div className="container">
+          <div className="section-header">
+            <h2>Productos</h2>
+            <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+          </div>
+          <div className="no-products-message">
+            <h3>🔍 Sin resultados</h3>
+            <p>Intenta con diferentes términos de búsqueda o ajusta los filtros.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="products" className="products">
       <div className="container">
         <div className="section-header">
-          <h2>Productos Destacados</h2>
-          <p>Descubre nuestra selección de productos más populares y nuevos lanzamientos.</p>
+          <h2>Productos {featuredProducts.length < 13 ? 'Filtrados' : 'Destacados'}</h2>
+          <p>{featuredProducts.length < 13 ? `Se encontraron ${featuredProducts.length} productos` : 'Descubre nuestra selección de productos más populares y nuevos lanzamientos.'}</p>
         </div>
         <div className="products-grid">
           {featuredProducts.map((product) => (
@@ -29,7 +50,9 @@ export default function FeaturedProducts({ featuredProducts, favorites, toggleFa
                   >
                     <Heart size={16} />
                   </button>
-                  <div className="product-category">{product.category}</div>
+                  <div className="product-category">
+                    {capitalizeFirst(product.category)} - {capitalizeFirst(product.gender)}
+                  </div>
                 </div>
                 <div className="product-info">
                   <div className="product-rating">

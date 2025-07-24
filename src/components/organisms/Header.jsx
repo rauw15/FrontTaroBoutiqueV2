@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import SearchBar from './SearchBar';
 
-const Header = ({ getTotalItems }) => {
+const Header = ({ getTotalItems, onSearch, onFilter, searchTerm, currentFilters }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
 
@@ -23,6 +24,16 @@ const Header = ({ getTotalItems }) => {
           <Link to="/#categorias" className="nav-link">Categorías</Link>
           <Link to="/#nosotros" className="nav-link">Nosotros</Link>
         </nav>
+
+        {/* Barra de Búsqueda */}
+        <div className="search-section">
+          <SearchBar 
+            onSearch={onSearch}
+            onFilter={onFilter}
+            searchTerm={searchTerm}
+            currentFilters={currentFilters}
+          />
+        </div>
 
         <div className="header-icons">
           {/* Botón de carrito */}
