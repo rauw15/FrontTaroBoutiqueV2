@@ -2,14 +2,25 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './App.css'; 
 
+// Contexto de autenticación
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+
+// Componentes de autenticación
+import ProtectedRoute from './components/common/ProtectedRoute';
+import Login from './components/auth/Login';
+
+// Componentes principales
 import Header from './components/organisms/Header';
 import Footer from './components/organisms/Footer';
 import Hero from './components/organisms/Hero';
 import Categories from './components/organisms/Categories';
 import FeaturedProducts from './components/organisms/FeaturedProducts';
 import About from './components/organisms/About';
+
+// Páginas
 import AdminPage from './pages/AdminPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import UserDashboard from './components/user/UserDashboard';
 
 const initialProducts = [
   { id: 1, name: "Vestido Elegante Verde", price: 89.99, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=400&fit=crop", rating: 4.8, category: "Vestidos", stock: 15, description: "Un vestido verde esmeralda perfecto para ocasiones especiales. Tela de seda con un corte que realza la figura." },
@@ -39,6 +50,28 @@ const HomePage = ({ products, categories, favorites, toggleFavorite, addToCart, 
     <About />
   </>
 );
+
+// Componente para botones de acceso rápido con verificación de autenticación
+const AuthAwareButtons = () => {
+  const { isAuthenticated, user } = useAuth();
+
+  if (!isAuthenticated) {
+    return null; // No mostrar botones si no está autenticado
+  }
+
+  return (
+    <>
+      <Link to="/mi-cuenta" className="quick-btn user-btn" title="Mi Cuenta">
+        👤
+      </Link>
+      {user?.role === 'admin' && (
+        <Link to="/admin" className="quick-btn admin-btn" title="Panel Admin">
+          ⚙️
+        </Link>
+      )}
+    </>
+  );
+};
 
 const App = () => {
   const [products, setProducts] = useState(initialProducts);
@@ -105,33 +138,101 @@ const App = () => {
   };
   
   return (
-    <BrowserRouter>
-      <div className="app-container"> 
-        <Header getTotalItems={getTotalItems} />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage products={products} categories={categoriesData} favorites={favorites} toggleFavorite={toggleFavorite} addToCart={addToCart} renderStars={renderStars} />} />
-            <Route path="/producto/:productId" element={<ProductDetailPage products={products} addToCart={addToCart} renderStars={renderStars} />} />
-            <Route path="/admin" element={<AdminPageWrapper />} />
-          </Routes>
-        </main>
-        <Footer />
-        
-        <div className="floating-elements">
-          <div className="cart-simulation">
-            <h4>Carrito de Compras</h4>
-            {cartItems.length === 0 ? <p>Vacío</p> : (
-              <>
-                <ul>{cartItems.map(item => <li key={item.id}>{item.name} x{item.quantity}</li>)}</ul>
-                <button onClick={handleCheckout} className="btn-checkout">Realizar Pedido</button>
-              </>
-            )}
-          </div>
-          <Link to="/admin" className="admin-toggle-btn">Panel de Admin</Link>
-        </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="app-container"> 
+          <Header getTotalItems={getTotalItems} />
+          <main>
+            <Routes>
+              {/* Rutas públicas */}
+              <Route 
+                path="/" 
+                element={
+                  <HomePage 
+                    products={products} 
+                    categories={categoriesData} 
+                    favorites={favorites} 
+                    toggleFavorite={toggleFavorite} 
+                    addToCart={addToCart} 
+                    renderStars={renderStars} 
+                  />
+                } 
+              />
+              <Route 
+                path="/producto/:productId" 
+                element={
+                  <ProductDetailPage 
+                    products={products} 
+                    addToCart={addToCart} 
+                    renderStars={renderStars} 
+                  />
+                } 
+              />
+              
+              {/* Rutas protegidas para usuarios */}
+              <Route 
+                path="/mi-cuenta" 
+                element={
+                  <ProtectedRoute>
+                    <UserDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Rutas protegidas para administradores */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <AdminPageWrapper />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Ruta de login independiente */}
+              <Route 
+                path="/login" 
+                element={<Login onSuccess={() => window.location.href = '/'} />} 
+              />
+            </Routes>
+          </main>
+          <Footer />
+          
+          {/* Elementos flotantes mejorados */}
+          <div className="floating-elements">
+            <div className="cart-simulation">
+              <h4>🛒 Carrito de Compras</h4>
+              {cartItems.length === 0 ? (
+                <p className="empty-cart">Tu carrito está vacío</p>
+              ) : (
+                <>
+                  <div className="cart-items">
+                    {cartItems.map(item => (
+                      <div key={item.id} className="cart-item">
+                        <span className="item-name">{item.name}</span>
+                        <span className="item-quantity">x{item.quantity}</span>
+                        <span className="item-price">${(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="cart-total">
+                    <strong>Total: ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</strong>
+                  </div>
+                  <button onClick={handleCheckout} className="btn-checkout">
+                    ✨ Realizar Pedido
+                  </button>
+                </>
+              )}
+            </div>
 
-      </div>
-    </BrowserRouter>
+            {/* Botones de acceso rápido */}
+            <div className="quick-access-buttons">
+              <AuthAwareButtons />
+            </div>
+          </div>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 
