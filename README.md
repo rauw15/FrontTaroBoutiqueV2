@@ -1,159 +1,201 @@
-# TaroBoutique - E-commerce Moderno 🛍️
+# TaroBoutique - Ecommerce Simulación
 
-Una aplicación de e-commerce moderna construida con React, que incluye autenticación, panel de administrador y dashboard de usuario.
+Una aplicación web de ecommerce completa construida con React que simula una tienda de ropa real con funcionalidades de administración, carrito de compras y gestión de pedidos.
 
-## ✨ Características Implementadas
+## 🚀 Características Principales
 
-### 🔐 Sistema de Autenticación
-- **Login simulado** con credenciales de prueba
-- **Contexto de autenticación** con React Context API
-- **Rutas protegidas** para diferentes roles de usuario
-- **Persistencia de sesión** con localStorage
-- **Preparado para backend real** con estructura de API
+### Para Clientes:
+- **Catálogo de Productos**: Visualización de productos con imágenes, precios y descripciones
+- **Sistema de Favoritos**: Marcar productos como favoritos
+- **Carrito de Compras**: Agregar productos, modificar cantidades y realizar pedidos
+- **Búsqueda y Filtros**: Filtrar productos por categoría, género y precio
+- **Detalles de Producto**: Páginas individuales con información completa
+- **Panel de Usuario**: Gestión de perfil, historial de pedidos y favoritos
 
-### 👤 Roles de Usuario
+### Para Administradores:
+- **Panel de Administración**: Gestión completa de productos y pedidos
+- **Gestión de Productos**: Agregar, editar y eliminar productos
+- **Control de Stock**: Actualizar inventario en tiempo real
+- **Registro de Pedidos**: Ver todos los pedidos con estados y detalles
+- **Estadísticas**: Resumen de ventas y pedidos
 
-#### Usuario Regular
-- Dashboard personal con pestañas organizadas
-- Gestión de perfil personal
-- Historial de pedidos con estados
-- Lista de favoritos
-- Configuración de cuenta
-- Notificaciones personalizables
+## 🛠️ Tecnologías Utilizadas
 
-#### Administrador
-- Panel de administración completo
-- Gestión de productos (CRUD)
-- Control de inventario
-- Visualización de pedidos
-- Estadísticas de ventas
+- **React 18** - Framework principal
+- **React Router** - Navegación entre páginas
+- **Context API** - Gestión de estado global
+- **LocalStorage** - Persistencia de datos
+- **Lucide React** - Iconos modernos
+- **CSS3** - Estilos personalizados
 
-### 🎨 Diseño Moderno
-- **Variables CSS** para consistencia de diseño
-- **Gradientes y sombras** modernas
-- **Animaciones suaves** y transiciones
-- **Diseño responsivo** para todos los dispositivos
-- **Tipografía mejorada** con fuentes modernas
-- **Elementos flotantes** rediseñados
-
-### 🛒 Funcionalidades E-commerce
-- Catálogo de productos con filtros
-- Carrito de compras flotante
-- Sistema de favoritos
-- Detalles de productos
-- Proceso de checkout simulado
-
-## 🚀 Credenciales de Prueba
-
-### Administrador
-- **Email:** admin@taroboutique.com
-- **Contraseña:** admin123
-
-### Usuario Regular
-- **Email:** usuario@ejemplo.com
-- **Contraseña:** usuario123
-
-## 🔧 Instalación y Uso
-
-```bash
-# Instalar dependencias
-npm install
-
-# Ejecutar en modo desarrollo
-npm run dev
-
-# Construir para producción
-npm run build
-```
-
-## 📱 Rutas Disponibles
-
-- `/` - Página principal (pública)
-- `/producto/:id` - Detalles del producto (pública)
-- `/login` - Página de login (pública)
-- `/mi-cuenta` - Dashboard de usuario (protegida)
-- `/admin` - Panel de administrador (solo admin)
-
-## 🔌 Preparación para Backend
-
-La aplicación está preparada para conectarse con un backend real:
-
-### Variables de Entorno
-```env
-REACT_APP_API_URL=http://localhost:3001/api
-```
-
-### Estructura de API Preparada
-- `AuthContext` con función `apiCall` genérica
-- Manejo de tokens JWT (preparado)
-- Gestión de errores de API
-- Estados de loading y error
-
-### Endpoints Sugeridos para Backend
-```
-POST /api/auth/login
-POST /api/auth/logout
-GET /api/user/profile
-PUT /api/user/profile
-GET /api/user/orders
-GET /api/products
-POST /api/products (admin)
-PUT /api/products/:id (admin)
-DELETE /api/products/:id (admin)
-```
-
-## 🎯 Características Técnicas
-
-### Tecnologías Utilizadas
-- **React 18** con Hooks
-- **React Router DOM** para navegación
-- **Context API** para estado global
-- **CSS Moderno** con variables y grid/flexbox
-- **Responsive Design** mobile-first
-
-### Patrones Implementados
-- **Componentes reutilizables** organizados por átomos/organismos
-- **Custom Hooks** para lógica compartida
-- **Protected Routes** con autorización por roles
-- **Context Pattern** para estado global
-- **Reducer Pattern** para manejo de estado complejo
-
-### Optimizaciones
-- **Lazy Loading** preparado para componentes
-- **Memoización** en componentes críticos
-- **Debounce** en búsquedas (preparado)
-- **Optimistic Updates** en interacciones
-
-## 📂 Estructura del Proyecto
+## 📁 Estructura del Proyecto
 
 ```
 src/
 ├── components/
-│   ├── auth/          # Componentes de autenticación
-│   ├── common/        # Componentes reutilizables
-│   ├── user/          # Dashboard de usuario
-│   └── organisms/     # Componentes principales
-├── contexts/          # Context API
-├── pages/            # Páginas principales
-├── routes/           # Configuración de rutas
-└── assets/           # Recursos estáticos
+│   ├── auth/           # Componentes de autenticación
+│   ├── common/         # Componentes compartidos
+│   ├── organisms/      # Componentes principales
+│   │   ├── admin/      # Componentes del panel admin
+│   │   └── user/       # Componentes del panel usuario
+│   └── contexts/       # Contextos de React
+├── pages/              # Páginas principales
+└── assets/             # Imágenes y recursos
 ```
 
-## 🔮 Próximas Mejoras Sugeridas
+## 🔐 Sistema de Autenticación
 
-- [ ] Integración con backend real
-- [ ] Sistema de pagos (Stripe/PayPal)
-- [ ] Chat en vivo
-- [ ] Notificaciones push
-- [ ] PWA (Progressive Web App)
-- [ ] Modo oscuro completo
-- [ ] Internacionalización (i18n)
-- [ ] Tests unitarios y e2e
+### Usuarios de Prueba:
+
+**Administrador:**
+- Email: `admin@taroboutique.com`
+- Contraseña: `admin123`
+
+**Usuario Regular:**
+- Email: `usuario@ejemplo.com`
+- Contraseña: `usuario123`
+
+## 🛍️ Funcionalidades del Ecommerce
+
+### 1. Gestión de Productos
+- Los administradores pueden agregar nuevos productos con:
+  - Nombre, precio, stock
+  - Categoría y género
+  - Imagen y descripción
+- Control de inventario en tiempo real
+- Eliminación de productos
+
+### 2. Carrito de Compras
+- Agregar productos al carrito
+- Modificar cantidades
+- Eliminar productos
+- Cálculo automático del total
+- Proceso de checkout con datos del cliente
+
+### 3. Sistema de Pedidos
+- Los pedidos se crean automáticamente al realizar checkout
+- Estados de pedido: Pendiente, En proceso, Completado, Cancelado
+- Información detallada del cliente y productos
+- Historial completo de pedidos
+
+### 4. Panel de Administración
+- **Gestión de Productos:**
+  - Formulario para agregar nuevos productos
+  - Tabla con todos los productos
+  - Edición de stock
+  - Eliminación de productos
+
+- **Registro de Pedidos:**
+  - Estadísticas de ventas
+  - Filtros por estado
+  - Vista detallada de cada pedido
+  - Cambio de estado de pedidos
+
+## 🎨 Características de Diseño
+
+- **Diseño Responsivo**: Adaptable a móviles y tablets
+- **Interfaz Moderna**: Diseño limpio y profesional
+- **Animaciones Suaves**: Transiciones y efectos visuales
+- **Elementos Flotantes**: Carrito y botones de acceso rápido
+- **Modales Interactivos**: Para detalles de pedidos y formularios
+
+## 🚀 Instalación y Uso
+
+### Prerrequisitos
+- Node.js (versión 16 o superior)
+- npm o yarn
+
+### Instalación
+
+1. **Clonar el repositorio:**
+```bash
+git clone <url-del-repositorio>
+cd FrontTaroBoutiqueV2
+```
+
+2. **Instalar dependencias:**
+```bash
+npm install
+```
+
+3. **Ejecutar en modo desarrollo:**
+```bash
+npm run dev
+```
+
+4. **Abrir en el navegador:**
+```
+http://localhost:5173
+```
+
+## 📱 Uso de la Aplicación
+
+### Como Cliente:
+1. **Explorar Productos**: Navegar por el catálogo
+2. **Agregar al Carrito**: Hacer clic en "Agregar" en cualquier producto
+3. **Gestionar Carrito**: Usar el carrito flotante para modificar cantidades
+4. **Realizar Pedido**: Completar formulario de checkout
+5. **Acceder a Mi Cuenta**: Ver historial y favoritos (requiere login)
+
+### Como Administrador:
+1. **Iniciar Sesión**: Usar credenciales de administrador
+2. **Acceder al Panel**: Botón flotante de administración
+3. **Gestionar Productos**: Agregar, editar o eliminar productos
+4. **Revisar Pedidos**: Ver y actualizar estados de pedidos
+
+## 💾 Persistencia de Datos
+
+La aplicación utiliza `localStorage` para persistir:
+- Productos del catálogo
+- Pedidos realizados
+- Carrito de compras
+- Lista de favoritos
+- Sesión de usuario
+
+## 🔧 Personalización
+
+### Agregar Nuevos Productos:
+1. Iniciar sesión como administrador
+2. Ir al panel de administración
+3. Usar el formulario "Agregar Nuevo Producto"
+4. Completar todos los campos requeridos
+
+### Modificar Estilos:
+- Editar `src/App.css` para cambios visuales
+- Los estilos están organizados por secciones
+- Diseño responsive incluido
+
+## 🎯 Características Destacadas
+
+### Simulación Realista:
+- **Gestión de Stock**: Los productos se marcan como "Sin Stock" cuando no hay inventario
+- **Estados de Pedido**: Sistema completo de seguimiento
+- **Datos Persistentes**: La información se mantiene entre sesiones
+- **Interfaz Intuitiva**: Navegación clara y funcional
+
+### Funcionalidades Avanzadas:
+- **Búsqueda Inteligente**: Filtros por nombre, categoría y descripción
+- **Filtros Múltiples**: Por género, categoría y rango de precio
+- **Sistema de Favoritos**: Persistente y sincronizado
+- **Carrito Avanzado**: Control de cantidades y eliminación
+
+## 🤝 Contribución
+
+Para contribuir al proyecto:
+1. Fork el repositorio
+2. Crear una rama para tu feature
+3. Commit tus cambios
+4. Push a la rama
+5. Abrir un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
 
 ## 📞 Soporte
 
-Para cualquier duda o sugerencia, puedes contactar al equipo de desarrollo.
+Para soporte técnico o preguntas sobre el proyecto, contactar a través de los issues del repositorio.
 
 ---
 
-**TaroBoutique** - E-commerce moderno y escalable 🚀
+**TaroBoutique** - Tu tienda de ropa virtual completa y funcional 🛍️✨

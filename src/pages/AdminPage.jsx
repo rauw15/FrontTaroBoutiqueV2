@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import ProductManager from '../components/organisms/admin/ProductManager';
 import OrderRegistry from '../components/organisms/admin/OrderRegistry';
 import { Package, ListOrdered, ArrowLeft } from 'lucide-react';
+import { useApp } from '../contexts/AppContext';
 
-export default function AdminPage({ products, orders, onAddProduct, onUpdateStock, onDeleteProduct, onBackToSite }) {
+export default function AdminPage({ onBackToSite }) {
   const [activeTab, setActiveTab] = useState('products'); 
+  const { products, orders, updateOrderStatus } = useApp();
 
   return (
     <div className="admin-page">
@@ -34,14 +36,14 @@ export default function AdminPage({ products, orders, onAddProduct, onUpdateStoc
 
         <main className="admin-content">
           {activeTab === 'products' && (
-            <ProductManager 
-              products={products}
-              onAddProduct={onAddProduct}
-              onUpdateStock={onUpdateStock}
-              onDeleteProduct={onDeleteProduct}
+            <ProductManager />
+          )}
+          {activeTab === 'orders' && (
+            <OrderRegistry 
+              orders={orders} 
+              onUpdateStatus={updateOrderStatus}
             />
           )}
-          {activeTab === 'orders' && <OrderRegistry orders={orders} />}
         </main>
       </div>
     </div>
