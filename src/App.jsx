@@ -18,6 +18,8 @@ import Categories from './components/organisms/Categories';
 import FeaturedProducts from './components/organisms/FeaturedProducts';
 import About from './components/organisms/About';
 import { Heart } from 'lucide-react';
+import PayPalCheckout from './components/common/PayPalCheckout';
+import PayPalTest from './components/common/PayPalTest';
 
 // Páginas
 import AdminPage from './pages/AdminPage';
@@ -33,7 +35,7 @@ const categoriesData = [
 
 const HomePage = ({ searchTerm, filters }) => {
   const { products, favorites, toggleFavorite, addToCart, renderStars } = useApp();
-  
+
   // Función para filtrar productos
   const getFilteredProducts = () => {
     let filtered = products;
@@ -78,6 +80,11 @@ const HomePage = ({ searchTerm, filters }) => {
         featuredProducts={getFilteredProducts()} 
       />
       <About />
+      
+      {/* Componente de prueba de PayPal - REMOVER DESPUÉS */}
+      <div className="container" style={{ marginTop: '50px', marginBottom: '50px' }}>
+        <PayPalTest />
+      </div>
     </>
   );
 };
@@ -108,6 +115,7 @@ const AuthAwareButtons = () => {
 const FloatingCart = () => {
   const { cartItems, removeFromCart, updateCartQuantity, processCheckout } = useApp();
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [showPayPalCheckout, setShowPayPalCheckout] = useState(false);
   const [customerInfo, setCustomerInfo] = useState({ name: '', email: '' });
 
   const getTotalItems = () => {
@@ -125,14 +133,27 @@ const FloatingCart = () => {
       return;
     }
 
+    setShowPayPalCheckout(true);
+  };
+
+  const handlePayPalSuccess = (orderData) => {
     try {
-      const order = processCheckout(customerInfo);
+      const order = processCheckout(orderData);
       setShowCheckoutForm(false);
+      setShowPayPalCheckout(false);
       setCustomerInfo({ name: '', email: '' });
       alert(`¡Pedido realizado con éxito! ID: #${order.id.toString().slice(-6)}`);
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const handlePayPalError = (error) => {
+    alert('Error al procesar el pago: ' + error.message);
+  };
+
+  const handlePayPalCancel = () => {
+    setShowPayPalCheckout(false);
   };
 
   return (
@@ -176,11 +197,11 @@ const FloatingCart = () => {
           <div className="cart-total">
             <strong>Total: ${getTotalPrice().toFixed(2)}</strong>
           </div>
-          {!showCheckoutForm ? (
+          {!showCheckoutForm && !showPayPalCheckout ? (
             <button onClick={() => setShowCheckoutForm(true)} className="btn-checkout">
               ✨ Realizar Pedido
             </button>
-          ) : (
+          ) : showCheckoutForm ? (
             <form onSubmit={handleCheckout} className="checkout-form">
               <input
                 type="text"
@@ -198,7 +219,7 @@ const FloatingCart = () => {
               />
               <div className="checkout-buttons">
                 <button type="submit" className="btn-checkout">
-                  ✨ Confirmar Pedido
+                  💳 Proceder con PayPal
                 </button>
                 <button 
                   type="button" 
@@ -209,7 +230,17 @@ const FloatingCart = () => {
                 </button>
               </div>
             </form>
-          )}
+          ) : showPayPalCheckout ? (
+            <div className="paypal-section">
+              <PayPalCheckout
+                amount={getTotalPrice()}
+                customerInfo={customerInfo}
+                onSuccess={handlePayPalSuccess}
+                onError={handlePayPalError}
+                onCancel={handlePayPalCancel}
+              />
+            </div>
+          ) : null}
         </>
       )}
     </div>
@@ -245,75 +276,75 @@ const AppContent = () => {
   };
   
   return (
-    <BrowserRouter>
-      <div className="app-container"> 
-        <Header 
-          onSearch={handleSearch}
-          onFilter={handleFilter}
-          searchTerm={searchTerm}
-          currentFilters={filters}
-        />
-        <main>
-          <Routes>
-            {/* Rutas públicas */}
-            <Route 
-              path="/" 
-              element={
-                <HomePage 
+      <BrowserRouter>
+        <div className="app-container"> 
+          <Header 
+            onSearch={handleSearch}
+            onFilter={handleFilter}
+            searchTerm={searchTerm}
+            currentFilters={filters}
+          />
+          <main>
+            <Routes>
+              {/* Rutas públicas */}
+              <Route 
+                path="/" 
+                element={
+                  <HomePage 
                   searchTerm={searchTerm}
                   filters={filters}
-                />
-              } 
-            />
-            <Route 
-              path="/producto/:productId" 
-              element={
-                <ProductDetailPage 
-                  renderStars={renderStars}
-                />
-              } 
-            />
-            
-            {/* Rutas protegidas para usuarios */}
-            <Route 
-              path="/mi-cuenta" 
-              element={
-                <ProtectedRoute>
+                  />
+                } 
+              />
+              <Route 
+                path="/producto/:productId" 
+                element={
+                  <ProductDetailPage 
+                    renderStars={renderStars} 
+                  />
+                } 
+              />
+              
+              {/* Rutas protegidas para usuarios */}
+              <Route 
+                path="/mi-cuenta" 
+                element={
+                  <ProtectedRoute>
                   <UserDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            
-            {/* Rutas protegidas para administradores */}
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute requireAdmin={true}>
-                  <AdminPageWrapper />
-                </ProtectedRoute>
-              } 
-            />
-            
-            {/* Ruta de login independiente */}
-            <Route 
-              path="/login" 
-              element={<Login onSuccess={() => window.location.href = '/'} />} 
-            />
-          </Routes>
-        </main>
-        <Footer />
-        
-        {/* Elementos flotantes mejorados */}
-        <div className="floating-elements">
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Rutas protegidas para administradores */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute requireAdmin={true}>
+                    <AdminPageWrapper />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Ruta de login independiente */}
+              <Route 
+                path="/login" 
+                element={<Login onSuccess={() => window.location.href = '/'} />} 
+              />
+            </Routes>
+          </main>
+          <Footer />
+          
+          {/* Elementos flotantes mejorados */}
+          <div className="floating-elements">
           <FloatingCart />
 
-          {/* Botones de acceso rápido */}
-          <div className="quick-access-buttons">
-            <AuthAwareButtons />
+            {/* Botones de acceso rápido */}
+            <div className="quick-access-buttons">
+              <AuthAwareButtons />
+            </div>
           </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
   );
 };
 

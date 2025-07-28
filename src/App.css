@@ -1808,20 +1808,20 @@ td ul {
   .header-content {
     padding: 0 15px;
   }
-
+  
   .search-section {
     padding: 15px 0;
   }
-
+  
   .filters-panel {
     margin: 15px;
     padding: 20px;
   }
-
+  
   .filter-options {
     flex-direction: column;
   }
-
+  
   .filter-option {
     justify-content: center;
   }
@@ -1852,4 +1852,148 @@ td ul {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* PayPal Checkout Styles */
+.paypal-section {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.paypal-checkout {
+  text-align: center;
+}
+
+.payment-header {
+  margin-bottom: 15px;
+}
+
+.payment-header h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.payment-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.paypal-buttons-container {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.payment-info {
+  margin-top: 15px;
+  padding: 10px;
+  background: #e8f5e8;
+  border-radius: 6px;
+  border-left: 4px solid #4CAF50;
+}
+
+.payment-info p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: #2e7d32;
+}
+
+.payment-success {
+  text-align: center;
+  padding: 20px;
+  background: #e8f5e8;
+  border-radius: 8px;
+  border: 1px solid #4CAF50;
+}
+
+.payment-success h3 {
+  margin: 10px 0 5px 0;
+  color: #2e7d32;
+}
+
+.payment-success p {
+  margin: 0;
+  color: #388e3c;
+}
+
+.payment-error {
+  text-align: center;
+  padding: 20px;
+  background: #ffebee;
+  border-radius: 8px;
+  border: 1px solid #f44336;
+}
+
+.payment-error h3 {
+  margin: 10px 0 5px 0;
+  color: #c62828;
+}
+
+.payment-error p {
+  margin: 0 0 15px 0;
+  color: #d32f2f;
+}
+
+.payment-cancelled {
+  text-align: center;
+  padding: 20px;
+  background: #fff3e0;
+  border-radius: 8px;
+  border: 1px solid #ff9800;
+}
+
+.payment-cancelled h3 {
+  margin: 10px 0 5px 0;
+  color: #e65100;
+}
+
+.payment-cancelled p {
+  margin: 0 0 15px 0;
+  color: #f57c00;
+}
+
+/* Responsive PayPal */
+@media (max-width: 768px) {
+  .paypal-buttons-container {
+    transform: scale(0.9);
+  }
+  
+  .payment-header h3 {
+    font-size: 16px;
+  }
+  
+  .payment-header p {
+    font-size: 13px;
+  }
+}
+
+.payment-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.payment-status.completed {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #4CAF50;
+}
+
+.payment-status.pending {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ff9800;
+}
+
+.payment-status.failed {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #f44336;
 }

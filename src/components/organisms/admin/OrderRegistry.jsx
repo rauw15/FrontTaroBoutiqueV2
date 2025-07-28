@@ -169,6 +169,21 @@ export default function OrderRegistry({ orders, onUpdateStatus }) {
                   <p><strong>Nombre:</strong> {selectedOrder.customerName}</p>
                   <p><strong>Email:</strong> {selectedOrder.customerEmail}</p>
                   <p><strong>Fecha:</strong> {new Date(selectedOrder.date).toLocaleString('es-ES')}</p>
+                  {selectedOrder.paymentMethod && (
+                    <>
+                      <p><strong>Método de Pago:</strong> {selectedOrder.paymentMethod}</p>
+                      {selectedOrder.paypalOrderId && (
+                        <p><strong>ID PayPal:</strong> {selectedOrder.paypalOrderId}</p>
+                      )}
+                      {selectedOrder.paymentStatus && (
+                        <p><strong>Estado del Pago:</strong> 
+                          <span className={`payment-status ${selectedOrder.paymentStatus}`}>
+                            {selectedOrder.paymentStatus}
+                          </span>
+                        </p>
+                      )}
+                    </>
+                  )}
                 </div>
                 
                 <div className="detail-section">

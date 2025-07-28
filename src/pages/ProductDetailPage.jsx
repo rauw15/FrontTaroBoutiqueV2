@@ -49,7 +49,7 @@ export default function ProductDetailPage({ renderStars }) {
             <p className="product-description">{product.description}</p>
             <div className="stock-info">
               <span className={`stock-status ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                Stock disponible: <strong>{product.stock} unidades</strong>
+              Stock disponible: <strong>{product.stock} unidades</strong>
               </span>
             </div>
             <div className="product-detail-footer">

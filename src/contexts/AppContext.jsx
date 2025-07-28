@@ -264,7 +264,11 @@ export const AppProvider = ({ children }) => {
       customerEmail: customerInfo.email || 'cliente@ejemplo.com',
       items: [...state.cartItems],
       total: total,
-      status: 'Pending'
+      status: 'Pending',
+      paymentMethod: customerInfo.paymentMethod || 'PayPal',
+      paypalOrderId: customerInfo.paypalOrderId,
+      paypalPayerId: customerInfo.paypalPayerId,
+      paymentStatus: customerInfo.paymentStatus || 'completed'
     };
 
     addOrder(newOrder);
