@@ -118,22 +118,6 @@ const PayPalTest = () => {
 
   return (
     <div className="paypal-test">
-      <div className="test-header">
-        <Info size={24} color="#2196F3" />
-        <h3>Prueba de PayPal</h3>
-        <p>Este es un componente de prueba para verificar que PayPal funciona correctamente.</p>
-      </div>
-      
-      <div className="test-info">
-        <p><strong>Client ID:</strong> {paypalOptions["client-id"].substring(0, 20)}...</p>
-        <p><strong>Moneda:</strong> {paypalOptions.currency}</p>
-        <p><strong>Entorno:</strong> Sandbox (Pruebas)</p>
-      </div>
-
-      <div className="test-amount">
-        <h4>Monto de Prueba: $10.00 MXN</h4>
-        <p>Este pago es solo para pruebas, no se procesará dinero real.</p>
-      </div>
       
       <PayPalScriptProvider options={paypalOptions}>
         <div className="paypal-buttons-container">
@@ -152,15 +136,6 @@ const PayPalTest = () => {
         </div>
       </PayPalScriptProvider>
       
-      <div className="test-instructions">
-        <h4>Instrucciones para la Prueba:</h4>
-        <ol>
-          <li>Haz clic en el botón de PayPal</li>
-          <li>Inicia sesión con tu cuenta de Sandbox</li>
-          <li>Completa el pago</li>
-          <li>Verifica los mensajes en la consola</li>
-        </ol>
-      </div>
     </div>
   );
 };
