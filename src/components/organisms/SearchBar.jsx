@@ -101,67 +101,87 @@ const SearchBar = ({ onSearch, onFilter, currentFilters = {}, searchTerm = '' })
       </form>
 
       {isFilterOpen && (
-        <div className="filters-panel active">
-          <div className="filters-header">
-            <h3>Filtros {hasActiveFilters && `(${Object.keys(currentFilters).filter(key => 
-              currentFilters[key] && 
-              (Array.isArray(currentFilters[key]) ? currentFilters[key].length > 0 : true)
-            ).length})`}</h3>
-            {hasActiveFilters && (
-              <button onClick={clearAllFilters} className="clear-filters">
-                <X size={16} /> Limpiar
-              </button>
-            )}
-          </div>
-
-          <div className="filter-section">
-            <h4>Género</h4>
-            <div className="filter-options">
-              {genderCategories.map(category => (
-                <button
-                  key={category.value}
-                  onClick={() => handleFilterChange('gender', category.value)}
-                  className={`filter-option ${currentFilters.gender === category.value ? 'active' : ''}`}
-                >
-                  <span className="filter-icon">{category.icon}</span>
-                  {category.label}
+        <>
+          <div className="filters-overlay active" onClick={toggleFilterPanel}></div>
+          <div className="filters-panel active">
+            <div className="filters-header">
+              <h3>
+                Filtros de Productos
+                {hasActiveFilters && (
+                  <span style={{ 
+                    fontSize: '0.9rem', 
+                    color: 'rgba(255, 255, 255, 0.8)', 
+                    fontWeight: 'normal',
+                    marginLeft: '10px'
+                  }}>
+                    ({Object.keys(currentFilters).filter(key => 
+                      currentFilters[key] && 
+                      (Array.isArray(currentFilters[key]) ? currentFilters[key].length > 0 : true)
+                    ).length} activos)
+                  </span>
+                )}
+              </h3>
+              {hasActiveFilters && (
+                <button onClick={clearAllFilters} className="clear-filters">
+                  <X size={16} /> Limpiar Todo
                 </button>
-              ))}
+              )}
+            </div>
+            
+            <div className="filters-content">
+              <div className="filter-section">
+                <h4>Género</h4>
+                <div className="filter-options">
+                  {genderCategories.map(category => (
+                    <button
+                      key={category.value}
+                      onClick={() => handleFilterChange('gender', category.value)}
+                      className={`filter-option ${currentFilters.gender === category.value ? 'active' : ''}`}
+                      title={`Filtrar por ${category.label}`}
+                    >
+                      <span className="filter-icon">{category.icon}</span>
+                      <span>{category.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-section">
+                <h4>Tipo de Ropa</h4>
+                <div className="filter-options">
+                  {clothingTypes.map(type => (
+                    <button
+                      key={type.value}
+                      onClick={() => handleFilterChange('clothing', type.value)}
+                      className={`filter-option ${currentFilters.clothing?.includes(type.value) ? 'active' : ''}`}
+                      title={`Filtrar por ${type.label}`}
+                    >
+                      <span className="filter-icon">{type.icon}</span>
+                      <span>{type.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-section">
+                <h4>Rango de Precio</h4>
+                <div className="filter-options">
+                  {priceRanges.map(range => (
+                    <button
+                      key={range.value}
+                      onClick={() => handleFilterChange('price', range.value)}
+                      className={`filter-option ${currentFilters.price === range.value ? 'active' : ''}`}
+                      title={`Filtrar por ${range.label}`}
+                    >
+                      <span className="filter-icon">{range.icon}</span>
+                      <span>{range.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className="filter-section">
-            <h4>Tipo de Ropa</h4>
-            <div className="filter-options">
-              {clothingTypes.map(type => (
-                <button
-                  key={type.value}
-                  onClick={() => handleFilterChange('clothing', type.value)}
-                  className={`filter-option ${currentFilters.clothing?.includes(type.value) ? 'active' : ''}`}
-                >
-                  <span className="filter-icon">{type.icon}</span>
-                  {type.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="filter-section">
-            <h4>Rango de Precio</h4>
-            <div className="filter-options">
-              {priceRanges.map(range => (
-                <button
-                  key={range.value}
-                  onClick={() => handleFilterChange('price', range.value)}
-                  className={`filter-option ${currentFilters.price === range.value ? 'active' : ''}`}
-                >
-                  <span className="filter-icon">{range.icon}</span>
-                  {range.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
