@@ -98,6 +98,12 @@ const AuthAwareButtons = () => {
     return null; // No mostrar botones si no está autenticado
   }
 
+  // No mostrar botones si estamos en el panel de administración
+  const isAdminPage = window.location.pathname === '/admin';
+  if (isAdminPage) {
+    return null;
+  }
+
   return (
     <>
       <Link to="/mi-cuenta" className="quick-btn user-btn" title="Mi Cuenta">

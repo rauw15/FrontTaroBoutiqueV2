@@ -1,6 +1,8 @@
 import React from "react";
+import { handleSmoothScroll } from '../../utils/smoothScroll';
 
 export default function Hero() {
+
   return (
     <section id="home" className="hero">
       <div className="container">
@@ -15,8 +17,20 @@ export default function Hero() {
               Calidad, elegancia y estilo en cada prenda.
             </p>
             <div className="hero-buttons">
-              <a href="#products" className="btn-primary">Ver Catálogo</a>
-              <a href="#about" className="btn-secondary">Conocer Más</a>
+              <a 
+                href="#products" 
+                className="btn-primary"
+                onClick={(e) => handleSmoothScroll(e, 'products')}
+              >
+                Ver Catálogo
+              </a>
+              <a 
+                href="#about" 
+                className="btn-secondary"
+                onClick={(e) => handleSmoothScroll(e, 'about')}
+              >
+                Conocer Más
+              </a>
             </div>
           </div>
           <div className="hero-image">

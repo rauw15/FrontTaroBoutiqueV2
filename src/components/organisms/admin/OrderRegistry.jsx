@@ -96,23 +96,23 @@ export default function OrderRegistry({ orders, onUpdateStatus }) {
           <div className="no-orders">
             <p>No se encontraron pedidos con el filtro seleccionado.</p>
           </div>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>ID Pedido</th>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Estado</th>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Estado</th>
                 <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
+            </tr>
+          </thead>
+          <tbody>
               {filteredOrders.map(order => (
-                <tr key={order.id}>
-                  <td>#{order.id.toString().slice(-6)}</td>
+              <tr key={order.id}>
+                <td>#{order.id.toString().slice(-6)}</td>
                   <td>{new Date(order.date).toLocaleDateString('es-ES')}</td>
                   <td>
                     <div className="customer-info">
@@ -128,8 +128,8 @@ export default function OrderRegistry({ orders, onUpdateStatus }) {
                     >
                       <Eye size={16} /> {order.items.length} items
                     </button>
-                  </td>
-                  <td>${order.total.toFixed(2)}</td>
+                </td>
+                <td>${order.total.toFixed(2)}</td>
                   <td>
                     <span className={`status ${getStatusColor(order.status)}`}>
                       {getStatusIcon(order.status)} {order.status}
@@ -147,10 +147,10 @@ export default function OrderRegistry({ orders, onUpdateStatus }) {
                       <option value="Cancelled">Cancelado</option>
                     </select>
                   </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         )}
       </div>
 

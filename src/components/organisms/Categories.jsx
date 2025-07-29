@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Categories({ categories }) {
   return (
-    <section className="categories">
+    <section id="categories" className="categories">
       <div className="container">
         <div className="section-header">
           <h2>Categorías Destacadas</h2>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useApp } from '../../contexts/AppContext';
 import SearchBar from './SearchBar';
+import { handleSmoothScroll } from '../../utils/smoothScroll';
 
 const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,16 +20,18 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
     }
   };
 
+  // La función handleSmoothScroll ahora se importa desde utils
+
   return (
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">TaroBoutique</Link>
         
         <nav className="nav-desktop">
-          <Link to="/" className="nav-link">Inicio</Link>
-          <Link to="/#productos" className="nav-link">Productos</Link>
-          <Link to="/#categorias" className="nav-link">Categorías</Link>
-          <Link to="/#nosotros" className="nav-link">Nosotros</Link>
+          <a href="#home" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'home')}>Inicio</a>
+          <a href="#products" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'products')}>Productos</a>
+          <a href="#categories" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'categories')}>Categorías</a>
+          <a href="#about" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'about')}>Nosotros</a>
         </nav>
 
         {/* Barra de Búsqueda */}
@@ -101,18 +104,46 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
 
       {/* Navegación móvil */}
       <nav className={`mobile-nav ${isMenuOpen ? 'active' : ''}`}>
-        <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+        <a 
+          href="#home" 
+          className="nav-link" 
+          onClick={(e) => {
+            handleSmoothScroll(e, 'home');
+            setIsMenuOpen(false);
+          }}
+        >
           Inicio
-        </Link>
-        <Link to="/#productos" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+        </a>
+        <a 
+          href="#products" 
+          className="nav-link" 
+          onClick={(e) => {
+            handleSmoothScroll(e, 'products');
+            setIsMenuOpen(false);
+          }}
+        >
           Productos
-        </Link>
-        <Link to="/#categorias" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+        </a>
+        <a 
+          href="#categories" 
+          className="nav-link" 
+          onClick={(e) => {
+            handleSmoothScroll(e, 'categories');
+            setIsMenuOpen(false);
+          }}
+        >
           Categorías
-        </Link>
-        <Link to="/#nosotros" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+        </a>
+        <a 
+          href="#about" 
+          className="nav-link" 
+          onClick={(e) => {
+            handleSmoothScroll(e, 'about');
+            setIsMenuOpen(false);
+          }}
+        >
           Nosotros
-        </Link>
+        </a>
         
         {/* Enlaces móviles de usuario */}
         {isAuthenticated ? (
