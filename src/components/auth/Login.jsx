@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import './Login.css';
 
@@ -166,7 +167,7 @@ const Login = ({ onSuccess }) => {
         </form>
 
         <div className="login-footer">
-          <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
+          <p>¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link></p>
         </div>
       </div>
     </div>

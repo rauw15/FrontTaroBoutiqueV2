@@ -83,6 +83,9 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
               <Link to="/login" className="login-btn">
                 👤 Iniciar Sesión
               </Link>
+              <Link to="/register" className="register-btn">
+                ✨ Registrarse
+              </Link>
             </div>
           )}
 
@@ -133,9 +136,14 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
             </button>
           </>
         ) : (
-          <Link to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-            👤 Iniciar Sesión
-          </Link>
+          <>
+            <Link to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              👤 Iniciar Sesión
+            </Link>
+            <Link to="/register" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              ✨ Registrarse
+            </Link>
+          </>
         )}
       </nav>
     </header>

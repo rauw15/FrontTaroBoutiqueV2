@@ -9,6 +9,7 @@ import { AppProvider, useApp } from './contexts/AppContext';
 // Componentes de autenticación
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 
 // Componentes principales
 import Header from './components/organisms/Header';
@@ -325,10 +326,14 @@ const AppContent = () => {
                 } 
               />
               
-              {/* Ruta de login independiente */}
+              {/* Rutas de autenticación independientes */}
               <Route 
                 path="/login" 
                 element={<Login onSuccess={() => window.location.href = '/'} />} 
+              />
+              <Route 
+                path="/register" 
+                element={<Register onSuccess={() => window.location.href = '/'} />} 
               />
             </Routes>
           </main>
