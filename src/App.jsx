@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import './App.css'; 
 
 // Contextos
@@ -21,6 +21,7 @@ import About from './components/organisms/About';
 import { Heart } from 'lucide-react';
 import PayPalCheckout from './components/common/PayPalCheckout';
 import PayPalTest from './components/common/PayPalTest';
+import { handleHashScroll } from './utils/smoothScroll';
 
 // Páginas
 import AdminPage from './pages/AdminPage';
@@ -36,6 +37,12 @@ const categoriesData = [
 
 const HomePage = ({ searchTerm, filters }) => {
   const { products, favorites, toggleFavorite, addToCart, renderStars } = useApp();
+  const location = useLocation();
+
+  // Manejar scroll al cargar la página con hash
+  useEffect(() => {
+    handleHashScroll();
+  }, [location]);
 
   // Función para filtrar productos
   const getFilteredProducts = () => {
@@ -107,9 +114,11 @@ const AuthAwareButtons = () => {
     return null; // No mostrar botones si no está autenticado
   }
 
-  // No mostrar botones si estamos en el panel de administración
+  // No mostrar botones si estamos en el panel de administración O si el usuario es admin
   const isAdminPage = window.location.pathname === '/admin';
-  if (isAdminPage) {
+  const isAdmin = user?.role === 'admin';
+  
+  if (isAdminPage || isAdmin) {
     return null;
   }
 
@@ -118,11 +127,6 @@ const AuthAwareButtons = () => {
       <Link to="/mi-cuenta" className="quick-btn user-btn" title="Mi Cuenta">
         👤
       </Link>
-      {user?.role === 'admin' && (
-        <Link to="/admin" className="quick-btn admin-btn" title="Panel Admin">
-          ⚙️
-        </Link>
-      )}
     </>
   );
 };

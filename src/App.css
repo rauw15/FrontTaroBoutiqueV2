@@ -98,6 +98,7 @@ body {
   padding: 0 20px;
   max-width: 1200px;
   margin: 0 auto;
+  gap: 15px;
 }
 
 .logo {
@@ -109,13 +110,15 @@ body {
 
 .nav-desktop {
   display: flex;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
 }
 
 .search-section {
-  flex: 1;
-  max-width: 400px;
+  flex: 0 0 auto;
+  width: 280px;
+  max-width: 280px;
+  min-width: 200px;
 }
 
 .nav-link {
@@ -133,6 +136,7 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
+  flex-shrink: 0;
 }
 
 .user-menu {
@@ -205,7 +209,7 @@ body {
 
 .auth-buttons {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
 }
 
@@ -1709,18 +1713,7 @@ td ul {
   font-weight: 500;
 }
 
-.search-section {
-  flex: 1;
-  max-width: 100%;
-  margin: 0 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 25px 0;
-  border-bottom: 1px solid #e0e0e0;
-  position: sticky;
-  top: 70px;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-}
+/* ELIMINADO - Este estilo duplicado causaba el fondo blanco */
 
 .search-bar-container {
   display: flex;
@@ -1736,16 +1729,18 @@ td ul {
   position: relative;
   display: flex;
   align-items: center;
-  background: transparent;
-  border-radius: 15px;
-  padding: 0 20px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  padding: 0 12px;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  width: 100%;
+  max-width: 100%;
+  height: 36px;
 }
 
 .search-input-wrapper:focus-within {
-  background: transparent;
-  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 2px #4CAF50;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
   transform: translateY(-1px);
 }
@@ -1764,8 +1759,8 @@ td ul {
   flex: 1;
   border: none;
   background: transparent;
-  padding: 15px 0;
-  font-size: 1rem;
+  padding: 8px 0;
+  font-size: 0.9rem;
   outline: none;
   color: #2c3e50;
 }
@@ -1779,15 +1774,39 @@ td ul {
 
 /* ===== PANEL DE FILTROS - DISEÑO MODERNO UI/UX ===== */
 .filters-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  margin-top: 20px;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  z-index: 2000;
+  width: 95%;
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
   display: none;
 }
 
 .filters-panel.active {
+  display: block;
+}
+
+/* Overlay para el modal de filtros */
+.filters-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1999;
+  display: none;
+}
+
+.filters-overlay.active {
   display: block;
 }
 
@@ -1853,7 +1872,7 @@ td ul {
 
 /* Contenedor principal de filtros */
 .filters-content {
-  padding: 24px;
+  padding: 20px;
   background: white;
   width: 100%;
   max-width: 100%;
@@ -1862,7 +1881,7 @@ td ul {
 
 /* Secciones de filtros modernas */
 .filter-section {
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   position: relative;
   width: 100%;
 }
@@ -1913,8 +1932,8 @@ td ul {
 /* Grid de opciones moderno */
 .filter-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
   padding: 0;
   width: 100%;
 }
@@ -1923,21 +1942,23 @@ td ul {
 .filter-option {
   background: #f8fafc;
   border: 2px solid #e2e8f0;
-  padding: 12px 16px;
-  border-radius: 14px;
+  padding: 15px 12px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 48px;
+  gap: 6px;
+  min-height: 60px;
   position: relative;
   overflow: hidden;
   color: #4a5568;
   width: 100%;
+  text-align: center;
 }
 
 .filter-option::before {
@@ -1975,7 +1996,7 @@ td ul {
 }
 
 .filter-icon {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   transition: transform 0.3s ease;
 }
 
@@ -1992,16 +2013,16 @@ td ul {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 50px;
+  padding: 8px 12px;
+  border-radius: 18px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  min-height: 48px;
+  min-width: 36px;
+  height: 36px;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
   position: relative;
   overflow: hidden;
@@ -2109,9 +2130,10 @@ td ul {
   }
   
   .filters-panel {
-    width: 500px;
-    max-width: 95vw;
+    width: 90%;
+    max-width: 700px;
     max-height: 85vh;
+    padding: 30px;
   }
   
   .filters-content {
@@ -2159,16 +2181,17 @@ td ul {
     margin: 0;
   }
   
-  .filters-panel {
-    width: 400px;
-    max-width: 98vw;
-    max-height: 90vh;
-  }
+      .filters-panel {
+      width: 95%;
+      max-width: 500px;
+      max-height: 90vh;
+      padding: 25px;
+    }
   
-  .filters-content {
-    padding: 16px;
-    max-width: 100%;
-  }
+      .filters-content {
+      padding: 15px;
+      max-width: 100%;
+    }
   
   .filters-header {
     padding: 14px 16px;
@@ -2350,4 +2373,153 @@ td ul {
   background: #ffebee;
   color: #c62828;
   border: 1px solid #f44336;
+}
+
+/* Header responsive fixes */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .search-section {
+    width: 200px;
+    max-width: 200px;
+    min-width: 140px;
+  }
+
+  .search-input-wrapper {
+    padding: 0 10px;
+    height: 34px;
+  }
+
+  .search-input {
+    padding: 6px 0;
+    font-size: 0.8rem;
+  }
+
+  .filter-button {
+    padding: 6px 10px;
+    min-width: 34px;
+    height: 34px;
+  }
+
+  .auth-buttons {
+    gap: 8px;
+  }
+
+  .login-btn, .register-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .filter-options {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .filter-option {
+    min-height: 55px;
+    padding: 12px 8px;
+  }
+}
+
+/* Header responsive mejorado */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .search-section {
+    max-width: 220px;
+    min-width: 150px;
+  }
+
+  .search-input-wrapper {
+    padding: 0 12px;
+  }
+
+  .search-input {
+    padding: 8px 0;
+    font-size: 0.85rem;
+  }
+
+  .filter-button {
+    padding: 8px 12px;
+  }
+
+  .auth-buttons {
+    gap: 6px;
+  }
+
+  .login-btn, .register-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0 8px;
+    gap: 8px;
+  }
+
+  .search-section {
+    width: 160px;
+    max-width: 160px;
+    min-width: 120px;
+  }
+
+  .search-input-wrapper {
+    padding: 0 8px;
+    height: 32px;
+  }
+
+  .search-input {
+    padding: 4px 0;
+    font-size: 0.75rem;
+  }
+
+  .filter-button {
+    padding: 5px 8px;
+    min-width: 32px;
+    height: 32px;
+  }
+
+  .auth-buttons {
+    gap: 6px;
+  }
+
+  .login-btn, .register-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  .filter-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .filter-option {
+    min-height: 50px;
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useApp } from '../../contexts/AppContext';
 import SearchBar from './SearchBar';
@@ -9,6 +9,8 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const { cartItems } = useApp();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -20,7 +22,29 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
     }
   };
 
-  // La función handleSmoothScroll ahora se importa desde utils
+  // Función de navegación híbrida que funciona desde cualquier página
+  const handleNavigation = (e, targetId) => {
+    e.preventDefault();
+    
+    // Si estamos en la página principal, usar smooth scroll
+    if (location.pathname === '/') {
+      handleSmoothScroll(e, targetId);
+    } else {
+      // Si estamos en otra página, navegar a home y luego hacer scroll
+      navigate('/');
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          const headerHeight = 70;
+          const targetPosition = targetElement.offsetTop - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100); // Pequeño delay para que la página cargue
+    }
+  };
 
   return (
     <header className="header">
@@ -28,10 +52,10 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
         <Link to="/" className="logo">TaroBoutique</Link>
         
         <nav className="nav-desktop">
-          <a href="#home" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'home')}>Inicio</a>
-          <a href="#products" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'products')}>Productos</a>
-          <a href="#categories" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'categories')}>Categorías</a>
-          <a href="#about" className="nav-link" onClick={(e) => handleSmoothScroll(e, 'about')}>Nosotros</a>
+          <a href="#home" className="nav-link" onClick={(e) => handleNavigation(e, 'home')}>Inicio</a>
+          <a href="#products" className="nav-link" onClick={(e) => handleNavigation(e, 'products')}>Productos</a>
+          <a href="#categories" className="nav-link" onClick={(e) => handleNavigation(e, 'categories')}>Categorías</a>
+          <a href="#about" className="nav-link" onClick={(e) => handleNavigation(e, 'about')}>Nosotros</a>
         </nav>
 
         {/* Barra de Búsqueda */}
@@ -108,7 +132,7 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
           href="#home" 
           className="nav-link" 
           onClick={(e) => {
-            handleSmoothScroll(e, 'home');
+            handleNavigation(e, 'home');
             setIsMenuOpen(false);
           }}
         >
@@ -118,7 +142,7 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
           href="#products" 
           className="nav-link" 
           onClick={(e) => {
-            handleSmoothScroll(e, 'products');
+            handleNavigation(e, 'products');
             setIsMenuOpen(false);
           }}
         >
@@ -128,7 +152,7 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
           href="#categories" 
           className="nav-link" 
           onClick={(e) => {
-            handleSmoothScroll(e, 'categories');
+            handleNavigation(e, 'categories');
             setIsMenuOpen(false);
           }}
         >
@@ -138,7 +162,7 @@ const Header = ({ onSearch, onFilter, searchTerm, currentFilters }) => {
           href="#about" 
           className="nav-link" 
           onClick={(e) => {
-            handleSmoothScroll(e, 'about');
+            handleNavigation(e, 'about');
             setIsMenuOpen(false);
           }}
         >

@@ -32,12 +32,31 @@ export const smoothScrollTo = (targetId, offset = 70) => {
   requestAnimationFrame(animateScroll);
 };
 
-// Función simplificada para usar en componentes
+// Función que maneja navegación inteligente
 export const handleSmoothScroll = (e, targetId) => {
   e.preventDefault();
   e.stopPropagation();
   
-  smoothScrollTo(targetId);
+  // Verificar si estamos en la página principal
+  const isHomePage = window.location.pathname === '/';
+  
+  if (isHomePage) {
+    // Si estamos en home, hacer scroll suave
+    smoothScrollTo(targetId);
+  } else {
+    // Si estamos en otra página, navegar a home con hash
+    window.location.href = `/#${targetId}`;
+  }
   
   return false;
+};
+
+// Función para manejar scroll después de cargar la página
+export const handleHashScroll = () => {
+  const hash = window.location.hash.substring(1); // Remover el #
+  if (hash) {
+    setTimeout(() => {
+      smoothScrollTo(hash);
+    }, 500); // Dar tiempo a que la página se cargue completamente
+  }
 }; 
