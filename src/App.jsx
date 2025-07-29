@@ -40,36 +40,45 @@ const HomePage = ({ searchTerm, filters }) => {
   // Función para filtrar productos
   const getFilteredProducts = () => {
     let filtered = products;
+    console.log('Productos totales:', products.length); // Debug
+    console.log('Filtros aplicados:', filters); // Debug
+    console.log('Término de búsqueda:', searchTerm); // Debug
 
     // Filtrar por término de búsqueda
-    if (searchTerm) {
+    if (searchTerm && searchTerm.trim() !== '') {
+      const searchLower = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchTerm.toLowerCase())
+        product.name.toLowerCase().includes(searchLower) ||
+        product.description.toLowerCase().includes(searchLower) ||
+        product.category.toLowerCase().includes(searchLower)
       );
+      console.log('Productos después de búsqueda:', filtered.length); // Debug
     }
 
     // Filtrar por género
-    if (filters.gender) {
+    if (filters.gender && filters.gender !== '') {
       filtered = filtered.filter(product => product.gender === filters.gender);
+      console.log('Productos después de filtro de género:', filtered.length); // Debug
     }
 
     // Filtrar por tipo de ropa
     if (filters.clothing && filters.clothing.length > 0) {
       filtered = filtered.filter(product => filters.clothing.includes(product.category));
+      console.log('Productos después de filtro de ropa:', filtered.length); // Debug
     }
 
     // Filtrar por rango de precio
-    if (filters.price) {
+    if (filters.price && filters.price !== '') {
       const [min, max] = filters.price.split('-').map(p => p === '+' ? Infinity : parseFloat(p));
-      if (max === undefined) {
+      if (max === undefined || isNaN(max)) {
         filtered = filtered.filter(product => product.price >= min);
       } else {
         filtered = filtered.filter(product => product.price >= min && product.price <= max);
       }
+      console.log('Productos después de filtro de precio:', filtered.length); // Debug
     }
 
+    console.log('Productos filtrados finales:', filtered.length); // Debug
     return filtered;
   };
 

@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 
 const SearchBar = ({ onSearch, onFilter, currentFilters = {}, searchTerm = '' }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  // Sincronizar el término de búsqueda local con el prop
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
 
   const genderCategories = [
     { value: 'mujer', label: 'Mujer', icon: '👩' },
@@ -50,6 +55,7 @@ const SearchBar = ({ onSearch, onFilter, currentFilters = {}, searchTerm = '' })
       newFilters.price = newFilters.price === value ? null : value;
     }
     
+    console.log('Aplicando filtros:', newFilters); // Debug
     onFilter(newFilters);
   };
 
@@ -57,6 +63,12 @@ const SearchBar = ({ onSearch, onFilter, currentFilters = {}, searchTerm = '' })
     setLocalSearchTerm('');
     onSearch('');
     onFilter({});
+    console.log('Limpiando todos los filtros'); // Debug
+  };
+
+  const toggleFilterPanel = () => {
+    setIsFilterOpen(!isFilterOpen);
+    console.log('Panel de filtros:', !isFilterOpen ? 'abierto' : 'cerrado'); // Debug
   };
 
   const hasActiveFilters = currentFilters.gender || 
@@ -78,18 +90,23 @@ const SearchBar = ({ onSearch, onFilter, currentFilters = {}, searchTerm = '' })
           />
           <button 
             type="button"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className={`filter-button ${isFilterOpen ? 'active' : ''}`}
+            onClick={toggleFilterPanel}
+            className={`filter-button ${isFilterOpen ? 'active' : ''} ${hasActiveFilters ? 'has-filters' : ''}`}
+            title="Filtrar productos"
           >
             <Filter size={20} />
+            {hasActiveFilters && <span className="filter-indicator">●</span>}
           </button>
         </div>
       </form>
 
       {isFilterOpen && (
-        <div className="filters-panel">
+        <div className="filters-panel active">
           <div className="filters-header">
-            <h3>Filtros</h3>
+            <h3>Filtros {hasActiveFilters && `(${Object.keys(currentFilters).filter(key => 
+              currentFilters[key] && 
+              (Array.isArray(currentFilters[key]) ? currentFilters[key].length > 0 : true)
+            ).length})`}</h3>
             {hasActiveFilters && (
               <button onClick={clearAllFilters} className="clear-filters">
                 <X size={16} /> Limpiar
